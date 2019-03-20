@@ -151,6 +151,7 @@ def main(_):
           slim.get_model_variables())
       variables_to_restore[tf_global_step.op.name] = tf_global_step
     else:
+      print('No moving_average_decay!')
       variables_to_restore = slim.get_variables_to_restore()
 
     predictions = tf.argmax(logits, 1)
