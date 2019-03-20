@@ -118,15 +118,19 @@ def _convert_dataset(split_name, filenames, class_names_to_ids, dataset_dir):
             sys.stdout.flush()
 
             # Read the filename:
-            image_data = tf.gfile.FastGFile(filenames[i], 'rb').read()
-            height, width = image_reader.read_image_dims(sess, image_data)
+            try:
+              image_data = tf.gfile.FastGFile(filenames[i], 'rb').read()
+              height, width = image_reader.read_image_dims(sess, image_data)
 
-            class_name = os.path.basename(os.path.dirname(filenames[i]))
-            class_id = class_names_to_ids[class_name]
+              class_name = os.path.basename(os.path.dirname(filenames[i]))
+              class_id = class_names_to_ids[class_name]
 
-            example = dataset_utils.image_to_tfexample(
-                image_data, b'jpg', height, width, class_id)
-            tfrecord_writer.write(example.SerializeToString())
+              example = dataset_utils.image_to_tfexample(
+                  image_data, b'jpg', height, width, class_id)
+              tfrecord_writer.write(example.SerializeToString())
+            except Exception as e:
+              print('Failed to process:', filenames[i])
+              print(e)
 
   sys.stdout.write('\n')
   sys.stdout.flush()
