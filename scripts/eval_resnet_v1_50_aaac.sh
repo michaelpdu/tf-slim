@@ -1,4 +1,4 @@
-CHECKPOINT_FILE=/data/aaac/inception_v1
+CHECKPOINT_FILE=/data/aaac/resnet_v1_50
 DATASET_DIR=/data/aaac
 python eval_image_classifier.py \
     --alsologtostderr \
@@ -6,6 +6,6 @@ python eval_image_classifier.py \
     --dataset_dir=${DATASET_DIR} \
     --dataset_name=aaac \
     --dataset_split_name=validation \
-    --model_name=inception_v1
+    --model_name=resnet_v1_50
 
 
